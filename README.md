@@ -28,7 +28,7 @@ python $CODE_DIR/fairseq_cli/preprocess.py -s zh -t en \
 ### Step 2: Train the Vanilla Transformer Model
 We train the vanilla model using the following command.
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python $CODE_DIR/fairseq_cli/train.py $data_bin \
+CUDA_VISIBLE_DEVICES=0,1,2,3 python $CODE_DIR/fairseq_cli/train.py $data_bin \
     --target-key-sep $index_for_sep \
     --ls-segment-indices "0,1" --ls-segment-weights "1,1" \
     --fp16 --seed 32 --ddp-backend no_c10d \
@@ -37,7 +37,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python $CODE_DIR/fairseq_cli/train.py $data
     --warmup-init-lr 1e-07 --warmup-updates 4000 \
     --max-update 50000 \
     --weight-decay 0.0 --clip-norm 0.0 --dropout 0.3 \
-    --max-tokens 4096 --update-freq 1 \
+    --max-tokens 8192 --update-freq 1 \
     --arch transformer --share-all-embeddings \
     --optimizer adam --adam-betas '(0.9, 0.98)' \
     --save-dir $CKPTS \
@@ -52,7 +52,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python $CODE_DIR/fairseq_cli/train.py $data
 ### Step 3: Integrate Vectorized Constraints
 We then train the constraint-aware model based on the checkpoint of the vanilla model.
 ```bash
-CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python $CODE_DIR/fairseq_cli/train.py $data_bin \
+CUDA_VISIBLE_DEVICES=0,1,2,3 python $CODE_DIR/fairseq_cli/train.py $data_bin \
     --finetune-from-model $path_to_vanilla_ckpt \
     --target-kv-table --target-key-sep $index_for_sep \
     --ls-segment-indices "0,1" --ls-segment-weights "$alpha,$beta" \
@@ -67,7 +67,7 @@ CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python $CODE_DIR/fairseq_cli/train.py $data
     --fp16 --seed 32 --ddp-backend no_c10d \
     -s zh -t en \
     --weight-decay 0.0 --clip-norm 0.0 --dropout 0.1 \
-    --max-tokens 4096 --update-freq 1 \
+    --max-tokens 8192 --update-freq 1 \
     --arch transformer --share-all-embeddings \
     --optimizer adam --adam-betas '(0.9, 0.98)' \
     --save-dir $CKPTS \
