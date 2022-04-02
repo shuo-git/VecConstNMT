@@ -6,7 +6,7 @@ This repository is based on [Fairseq](https://github.com/pytorch/fairseq). Pleas
 ## Usage
 Suppose the local path to this repository is `CODE_DIR`.
 ### Step 1: Data Preparation
-We firstly use [this script](https://github.com/ghchen18/cdalign/blob/main/scripts/extract_phrase.py) to extract the lexical constraints for both the training and test sets. After that, we prepend the constraints before the target sentences. The constraints are separated by a special token `<sep>`. We use `<pad>` as the placeholder for sentence pairs with less than three constraint pairs. Here is an example:
+We firstly use [this script](https://github.com/ghchen18/cdalign/blob/main/scripts/extract_phrase.py) to extract the lexical constraints for the training, validation and test sets. After that, we prepend the constraints before the target sentences. The constraints are separated by a special token `<sep>`. We use `<pad>` as the placeholder for sentence pairs with less than three constraint pairs. Here is an example:
 ```
 # Source corpus
 您 对 此 有 何 看法 ?
