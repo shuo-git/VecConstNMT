@@ -55,7 +55,7 @@ We then train the constraint-aware model based on the checkpoint of the vanilla 
 CUDA_VISIBLE_DEVICES=0,1,2,3 python $CODE_DIR/fairseq_cli/train.py $data_bin \
     --finetune-from-model $path_to_vanilla_ckpt \
     --target-kv-table --target-key-sep $index_for_sep \
-    --ls-segment-indices "0,1" --ls-segment-weights "$alpha,$beta" \
+    --ls-segment-indices "0,1" --ls-segment-weights "$beta,$alpha" \
     --lambda-rank-reg 0 \
     --kv-attention-dropout 0.1 --kv-projection-dropout 0.1 \
     --plug-in-type type2 --plug-in-forward bottom --plug-in-component encdec \
